@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para vos ❤️</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:'Playfair Display',serif}
+body{
+  background:radial-gradient(circle at 50% 20%,#7b1838 0,#32091c 38%,#10030a 100%);
+  color:#35131d;overflow-x:hidden;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.45;
+  background-image:
+    radial-gradient(circle,rgba(255,180,200,.9) 0 2px,transparent 3px),
+    radial-gradient(circle,rgba(255,80,130,.65) 0 2px,transparent 3px);
+  background-size:90px 90px,140px 140px;
+  background-position:20px 10px,60px 50px;
+  animation:sparkle 7s linear infinite;
+}
+@keyframes sparkle{to{background-position:110px 100px,0 150px}}
+
+.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.heart{
+  position:absolute;bottom:-40px;font-size:24px;opacity:.7;
+  animation:float 8s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(0) rotate(0);opacity:0}
+  15%{opacity:.75}100%{transform:translateY(-110vh) rotate(30deg);opacity:0}
+}
+
+.cover{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:28px;position:relative;z-index:2;
+}
+.cover-card{text-align:center;color:white;max-width:700px}
+.cover h1{
+  font-family:'Caveat',cursive;font-size:clamp(64px,12vw,115px);
+  margin:0;text-shadow:0 4px 20px #000;
+}
+.cover h2{font-family:'Caveat',cursive;font-size:clamp(30px,6vw,55px);font-weight:500;margin:0 0 25px}
+.big-heart{
+  width:180px;height:150px;margin:20px auto;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  filter:drop-shadow(0 0 25px #ff5b88);
+  animation:pulse 1.7s ease-in-out infinite;
+}
+.big-heart:before,.big-heart:after{
+  content:"";position:absolute;width:105px;height:160px;border:5px solid #ff8baa;
+  border-radius:80px 80px 0 0;top:0;background:transparent;
+}
+.big-heart:before{transform:rotate(-45deg);left:25px}
+.big-heart:after{transform:rotate(45deg);right:25px}
+.big-heart span{position:relative;z-index:2;color:white;font-weight:bold;line-height:1.35}
+@keyframes pulse{50%{transform:scale(1.07)}}
+
+.open-btn{
+  border:0;border-radius:40px;padding:17px 36px;font-size:19px;font-weight:bold;
+  color:white;background:linear-gradient(135deg,#ff507c,#d51d54);
+  box-shadow:0 10px 35px rgba(255,40,100,.4);cursor:pointer;transition:.25s;
+}
+.open-btn:hover{transform:scale(1.04)}
+.sound-note{font-size:14px;margin-top:15px;opacity:.9}
+
+.book-wrap{display:none;min-height:100vh;padding:35px 14px 80px;position:relative;z-index:2}
+.book-wrap.show{display:block;animation:appear .7s ease}
+@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+.book{
+  width:min(1050px,100%);margin:auto;position:relative;
+  perspective:1800px;
+}
+.page{
+  display:none;min-height:650px;background:#f8edd9;
+  border-radius:8px 18px 18px 8px;padding:45px;
+  box-shadow:0 20px 60px rgba(0,0,0,.55),inset 0 0 35px rgba(100,55,20,.12);
+  position:relative;overflow:hidden;
+}
+.page.active{display:block;animation:turnIn .65s ease}
+@keyframes turnIn{
+  from{opacity:0;transform:rotateY(-12deg) translateX(20px)}
+  to{opacity:1;transform:none}
+}
+.page:after{
+  content:"";position:absolute;inset:14px;border:1px solid rgba(100,50,30,.16);
+  border-radius:4px;pointer-events:none;
+}
+.page h2{
+  font-family:'Caveat',cursive;font-size:clamp(38px,6vw,58px);
+  color:#d92e5c;margin:0 0 20px;position:relative;z-index:2;
+}
+.page p{
+  font-size:clamp(17px,2.2vw,21px);line-height:1.75;margin:0 0 15px;
+  position:relative;z-index:2;
+}
+.page .highlight{color:#d51d54;font-weight:bold}
+.photo{
+  width:min(390px,100%);display:block;margin:15px auto 25px;
+  padding:10px 10px 35px;background:white;
+  box-shadow:0 8px 22px rgba(0,0,0,.25);transform:rotate(-2deg);
+  position:relative;z-index:2;
+}
+.photo img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover;background:#ddd}
+.photo figcaption{text-align:center;font-family:'Caveat',cursive;font-size:25px;margin-top:6px}
+
+.page-number{
+  position:absolute;bottom:25px;right:40px;font-family:'Caveat',cursive;
+  font-size:23px;color:#a65b6c;z-index:3;
+}
+.controls{
+  width:min(1050px,100%);margin:18px auto 0;display:flex;
+  justify-content:center;align-items:center;gap:15px;position:relative;z-index:3;
+}
+.nav{
+  border:0;border-radius:30px;padding:13px 25px;background:#f8d5df;color:#7d1735;
+  font-weight:bold;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+.nav:disabled{opacity:.35;cursor:not-allowed}
+.counter{color:white;font-weight:bold}
+.end{ text-align:center }
+.end .final-heart{font-size:75px;animation:pulse 1.7s infinite}
+.end h2{font-size:65px}
+.music-control{
+  position:fixed;right:15px;bottom:15px;z-index:20;border:0;border-radius:50%;
+  width:52px;height:52px;font-size:22px;background:#ffd5df;cursor:pointer;
+  box-shadow:0 5px 20px rgba(0,0,0,.4);display:none;
+}
+.music-control.show{display:block}
+
+@media(max-width:650px){
+  .page{padding:30px 22px;min-height:700px}
+  .page p{font-size:16px;line-height:1.65}
+  .photo{width:92%}
+}
+</style>
+</head>
+
+<body>
+<div class="hearts" id="hearts"></div>
+
+<section class="cover" id="cover">
+  <div class="cover-card">
+    <h1>Para vos... ❤️</h1>
+    <h2>La persona que volvió a hacerme feliz</h2>
+    <div class="big-heart"><span>Gracias por existir<br>y por volver a mi vida<br>te amo ❤️</span></div>
+    <button class="open-btn" id="openBook">📖 Abrir nuestro libro ❤️</button>
+    <div class="sound-note">🎧 Activá el sonido para vivir esta historia conmigo</div>
+  </div>
+</section>
+
+<main class="book-wrap" id="bookWrap">
+  <div class="book">
+
+    <section class="page active">
+      <h2>1. El día que volvimos a hablar ❤️</h2>
+      <figure class="photo">
+        <img src="image1.jpg" alt="Nuestro primer recuerdo">
+        <figcaption>image1 ❤️</figcaption>
+      </figure>
+      <p>Después de tanto tiempo sin saber de vos, sin saber cómo estabas, sin compartir nuestras cosas como antes... volvimos a hablar. 🥹❤️</p>
+      <p>Y quizás para vos fue simplemente volver a conversar, pero para mí significó muchísimo más. Fue como volver a encontrar una parte de mi felicidad que no sabía cuánto extrañaba. 💞</p>
+      <p>Desde ese momento empecé a sentirme diferente otra vez. Volví a sonreír por un mensaje, a esperar nuestras conversaciones y a emocionarme por esos pequeños momentos que compartíamos. 🫶🏻✨</p>
+      <p>No sé si alguna vez te lo dije de la manera correcta, pero <span class="highlight">volver a tenerte en mi vida me hizo muy feliz.</span> ❤️‍🩹</p>
+      <p>Y con el tiempo, entre conversaciones, risas, momentos lindos y tantas cosas que fuimos viviendo, me fui encariñando cada vez más con vos.</p>
+      <p><span class="highlight">No quiero perderte.</span> ❤️ Porque volver a encontrarte me hizo entender lo especial que sos para mí.</p>
+      <p>Esta es solamente la primera página de nuestra historia... 📖💕</p>
+      <div class="page-number">1 / 5</div>
+    </section>
+
+    <section class="page">
+      <h2>2. Todos nuestros momentos hermosos 💕</h2>
+      <figure class="photo">
+        <img src="image2.jpg" alt="Un recuerdo hermoso juntos">
+        <figcaption>image2 🥰</figcaption>
+      </figure>
+      <p>Desde que volvimos a hablar, cada día tuvo algo especial. Nuestras conversaciones, nuestras risas, nuestros chistes, nuestros juegos y hasta los silencios cómodos. ❤️</p>
+      <p>Me encanta cómo podemos hablar de todo y de nada a la vez, cómo me hacés reír y cómo incluso en los peores días podemos encontrar un pequeño momento para estar bien. 🥹🫶🏻</p>
+      <p>Cada partida, cada llamada, cada texto, cada foto y cada salida se fueron convirtiendo en recuerdos que guardo con muchísimo cariño. 💗</p>
+      <p>Quizás algunos de esos momentos parezcan pequeños, pero para mí significan muchísimo porque los compartí con vos.</p>
+      <p><span class="highlight">Gracias por existir, por estar, por ser vos, por darme tu tiempo, tu cariño y tu compañía.</span> 🌹</p>
+      <p>Sos una parte muy importante de mi vida y no me imagino todos estos recuerdos sin vos. ❤️</p>
+      <div class="page-number">2 / 5</div>
+    </section>
+
+    <section class="page">
+      <h2>3. Las peleas, las discusiones y los días difíciles ❤️‍🩹</h2>
+      <figure class="photo">
+        <img src="image3.jpg" alt="Un recuerdo de nuestra historia">
+        <figcaption>image3 ❤️‍🩹</figcaption>
+      </figure>
+      <p>No todo fue perfecto, y yo lo sé. Tuvimos peleas, discusiones, malos entendidos y momentos difíciles que nos hicieron pensar demasiado. 🥺</p>
+      <p>Hubo días en los que mis palabras, mis actitudes o incluso cosas tontas como los puntos de Free Fire fueron motivo de pelea. Y quiero que sepas que muchas veces nunca fue mi intención lastimarte ni hacerte sentir mal. ❤️</p>
+      <p>Quiero pedirte perdón por esos momentos. Por las veces que me equivoqué, por las veces que reaccioné mal o dije cosas que no debía. No soy perfecto y todavía tengo mucho que aprender.</p>
+      <p>Pero también quiero agradecerte por no rendirte, por seguir ahí, por entender mis errores y por darme otra oportunidad para demostrarte que puedo hacerlo mejor. 🫶🏻</p>
+      <p><span class="highlight">Las peleas no nos definen; lo que nos define es que, después de los momentos difíciles, buscamos volver a estar bien. 💞</span></p>
+      <p>Para mí, esto también es una prueba: una prueba de que podemos aprender, escucharnos y seguir construyendo algo bonito juntos, incluso cuando hay días complicados.</p>
+      <div class="page-number">3 / 5</div>
+    </section>
+
+    <section class="page">
+      <h2>4. Lo que quiero que sepas de mí 💗</h2>
+      <figure class="photo">
+        <img src="image4.jpg" alt="Nuestro recuerdo más especial">
+        <figcaption>image4 💗</figcaption>
+      </figure>
+      <p>Tal vez alguna vez pensaste o soñaste que yo te iba a cambiar por otra persona, por alguien con más dinero o por alguien que tuviera más cosas... pero quiero que sepas algo muy importante:</p>
+      <p class="highlight">Yo no quiero cambiarte por nadie. ❤️</p>
+      <p>Vos sos vos, con tus virtudes, tus defectos, tus enojos, tus celos, tus locuras, tus risas y esa forma única de ser que te hace especial. 🥹💞</p>
+      <p>No me importa el dinero ni las cosas materiales. Lo que realmente me importa es tenerte a vos a mi lado, compartir momentos, construir recuerdos y hacer que cada día juntos valga la pena. ❤️</p>
+      <p>No busco a alguien perfecto porque yo tampoco lo soy. Busco a la persona con la que pueda reír, hablar, aprender, equivocarme, pedir perdón y volver a intentarlo.</p>
+      <p><span class="highlight">Quiero estar para vos en los días buenos y también en los días difíciles.</span> No porque todo tenga que ser perfecto, sino porque cuando algo importa de verdad, también vale la pena cuidarlo. 🫶🏻</p>
+      <div class="page-number">4 / 5</div>
+    </section>
+
+    <section class="page end">
+      <div class="final-heart">❤️</div>
+      <h2>Para terminar...</h2>
+      <p>Quizás esto sea solamente una página web, pero cada palabra que estás leyendo salió de algo que siento de verdad. 🥹❤️</p>
+      <p>No sé qué nos espera mañana, pero sí sé que quiero seguir creando recuerdos con vos, aprendiendo de nuestros errores y disfrutando cada momento que podamos compartir.</p>
+      <p><span class="highlight">Te quiero por quien sos, no por lo que tenés.</span> 🫶🏻💗</p>
+      <p>Y después de todo lo que vivimos, esta es una prueba más de que podemos atravesar juntos los días buenos y también los difíciles. ❤️‍🩹</p>
+      <p>Gracias por volver a mi vida, gracias por cada sonrisa, cada conversación, cada recuerdo y cada oportunidad. 🌹</p>
+      <p style="font-family:'Caveat',cursive;font-size:48px;color:#d51d54"><strong>Te amo con todo mi corazón. ❤️</strong></p>
+      <p>Siempre voy a valorar lo que vivimos y todo lo bonito que todavía podemos construir. 💞✨</p>
+      <div class="page-number">5 / 5</div>
+    </section>
+
+  </div>
+
+  <div class="controls">
+    <button class="nav" id="prev" disabled>← Anterior</button>
+    <span class="counter" id="counter">Página 1 de 5</span>
+    <button class="nav" id="next">Siguiente →</button>
+  </div>
+</main>
+
+<button class="music-control" id="musicBtn" title="Pausar/reproducir música">🎵</button>
+<audio id="music" src="musica.mp3" loop preload="auto"></audio>
+
+<script>
+const pages = [...document.querySelectorAll('.page')];
+const cover = document.getElementById('cover');
+const bookWrap = document.getElementById('bookWrap');
+const openBook = document.getElementById('openBook');
+const next = document.getElementById('next');
+const prev = document.getElementById('prev');
+const counter = document.getElementById('counter');
+const music = document.getElementById('music');
+const musicBtn = document.getElementById('musicBtn');
+let current = 0;
+
+function updatePage(){
+  pages.forEach((p,i)=>p.classList.toggle('active',i===current));
+  prev.disabled = current===0;
+  next.disabled = current===pages.length-1;
+  counter.textContent = `Página ${current+1} de ${pages.length}`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+openBook.addEventListener('click', async ()=>{
+  cover.style.display='none';
+  bookWrap.classList.add('show');
+  musicBtn.classList.add('show');
+  try{
+    await music.play();
+    musicBtn.textContent='🔊';
+  }catch(e){
+    musicBtn.textContent='🎵';
+  }
+  updatePage();
+});
+
+next.addEventListener('click',()=>{
+  if(current < pages.length-1){current++;updatePage();}
+});
+prev.addEventListener('click',()=>{
+  if(current > 0){current--;updatePage();}
+});
+
+musicBtn.addEventListener('click',async ()=>{
+  if(music.paused){
+    await music.play();
+    musicBtn.textContent='🔊';
+  }else{
+    music.pause();
+    musicBtn.textContent='🔇';
+  }
+});
+
+document.addEventListener('keydown',e=>{
+  if(bookWrap.classList.contains('show')){
+    if(e.key==='ArrowRight') next.click();
+    if(e.key==='ArrowLeft') prev.click();
+  }
+});
+
+// Corazones flotando
+const heartBox=document.getElementById('hearts');
+const symbols=['❤️','💕','💗','💖','💞','💓','💘','✨'];
+for(let i=0;i<28;i++){
+  const h=document.createElement('span');
+  h.className='heart';
+  h.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+  h.style.left=Math.random()*100+'%';
+  h.style.animationDelay=(Math.random()*8)+'s';
+  h.style.animationDuration=(6+Math.random()*6)+'s';
+  h.style.fontSize=(14+Math.random()*25)+'px';
+  heartBox.appendChild(h);
+}
+</script>
+</body>
+</html>
